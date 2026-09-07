@@ -64,9 +64,9 @@ const filteredGames = computed(() => {
 })
 
 useSeoMeta({
-  title: 'MMOTOR — Game Server Rankings',
-  description: 'MMOTOR gaming server directory with top games, upcoming servers and recently started servers.',
-  ogTitle: 'MMOTOR — Game Server Rankings',
+  title: 'MMOTOP — Game Server Rankings',
+  description: 'MMOTOP gaming server directory with top games, upcoming servers and recently started servers.',
+  ogTitle: 'MMOTOP — Game Server Rankings',
   ogDescription: 'Discover and compare game servers.',
   twitterCard: 'summary_large_image'
 })
@@ -87,7 +87,7 @@ function gameIcon(game: Game) {
 <template>
   <div class="site-shell" :class="{ 'is-light': !dark }">
     <header class="topbar">
-      <NuxtLink to="/" class="brand" aria-label="MMOTOR home">MMOTOR</NuxtLink>
+      <NuxtLink to="/" class="brand" aria-label="MMOTOP home">MMOTOP</NuxtLink>
 
       <button class="theme-button" type="button" aria-label="Toggle theme" @click="toggleTheme">
         <span class="moon">{{ dark ? '☾' : '☀' }}</span>
