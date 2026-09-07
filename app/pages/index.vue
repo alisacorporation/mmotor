@@ -140,8 +140,7 @@ function gameIcon(game: Game) {
         </GamePanel>
 
         <GamePanel title="COMING SOON" icon="◷">
-          <div v-for="(game, index) in soon" :key="`soon-${index}`" class="game-row compact">
-            <span class="rank">{{ index + 1 }}</span>
+          <div v-for="(game, index) in soon" :key="`soon-${index}`" class="game-row compact no-rank">
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
@@ -155,8 +154,7 @@ function gameIcon(game: Game) {
         </GamePanel>
 
         <GamePanel title="ALREADY STARTED" icon="ϟ">
-          <div v-for="(game, index) in started" :key="`started-${index}`" class="game-row compact">
-            <span class="rank">{{ index + 1 }}</span>
+          <div v-for="(game, index) in started" :key="`started-${index}`" class="game-row compact no-rank">
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
@@ -172,8 +170,7 @@ function gameIcon(game: Game) {
 
       <section class="bottom-grid">
         <GamePanel title="NEW GAMES" icon="⌁" :rows="3">
-          <div v-for="(game, index) in newGames" :key="`new-${index}`" class="game-row">
-            <span class="rank">{{ index + 1 }}</span>
+          <div v-for="(game, index) in newGames" :key="`new-${index}`" class="game-row no-rank">
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
@@ -186,8 +183,7 @@ function gameIcon(game: Game) {
         </GamePanel>
 
         <GamePanel title="ALL GAMES" icon="⌘" :rows="3">
-          <div v-for="(game, index) in allGames" :key="`all-${index}`" class="game-row">
-            <span class="rank">{{ index + 1 }}</span>
+          <div v-for="(game, index) in allGames" :key="`all-${index}`" class="game-row no-rank">
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
