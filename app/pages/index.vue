@@ -130,9 +130,8 @@ function gameIcon(game: Game) {
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
-              <small>{{ game.genre }}</small>
+              <small>{{ game.genre }} · {{ game.version }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
             <span class="rating">★ {{ game.stars }}<small>{{ game.players }}</small></span>
             <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
@@ -144,9 +143,8 @@ function gameIcon(game: Game) {
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
-              <small>{{ game.genre }}</small>
+              <small>{{ game.genre }} · {{ game.version }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
             <span class="rating">★ {{ game.stars }}<small>{{ game.players }}</small></span>
             <span class="date">{{ game.date }}</span>
           </div>
@@ -158,9 +156,8 @@ function gameIcon(game: Game) {
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
-              <small>{{ game.genre }}</small>
+              <small>{{ game.genre }} · {{ game.version }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
             <span class="rating">★ {{ game.stars }}<small>{{ game.players }}</small></span>
             <span class="date">{{ game.date }}</span>
           </div>
@@ -174,9 +171,8 @@ function gameIcon(game: Game) {
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
-              <small>{{ game.genre }}</small>
+              <small>{{ game.genre }} · {{ game.version }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
             <span class="rating">★ {{ game.stars }}<small>{{ game.players }}</small></span>
             <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
@@ -188,9 +184,8 @@ function gameIcon(game: Game) {
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
-              <small>{{ game.genre }}</small>
+              <small>{{ game.genre }} · {{ game.version }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
             <span class="rating">★ {{ game.stars }}<small>{{ game.players }}</small></span>
             <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
