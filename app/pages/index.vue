@@ -180,6 +180,7 @@ function gameIcon(game: Game) {
             <span class="rating">★ {{ game.stars }}<small>{{ game.players }}</small></span>
             <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
+          <PanelFooter />
         </GamePanel>
 
         <GamePanel title="ALL GAMES" icon="⌘" :rows="3">
@@ -193,6 +194,7 @@ function gameIcon(game: Game) {
             <span class="rating">★ {{ game.stars }}<small>{{ game.players }}</small></span>
             <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
+          <PanelFooter />
         </GamePanel>
       </section>
     </main>
