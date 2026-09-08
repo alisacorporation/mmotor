@@ -448,14 +448,30 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   .game-row,
   .game-row.compact {
     grid-template-columns: 22px 32px minmax(100px, 1fr) 59px;
+    grid-template-areas:
+      "rank logo name  stats"
+      "rank logo extra extra";
+    row-gap: 3px;
     gap: 5px;
+    padding-block: 8px;
     padding-inline: 10px;
+    align-items: center;
   }
   .game-row.no-rank,
   .game-row.compact.no-rank {
     grid-template-columns: 32px minmax(100px, 1fr) 59px;
+    grid-template-areas:
+      "logo name  stats"
+      "logo extra extra";
   }
+  .game-row .rank { grid-area: rank; }
+  .game-row .game-logo { grid-area: logo; align-self: center; }
+  .game-row .game-name { grid-area: name; }
+  .game-row .rating { grid-area: stats; }
   .game-row .change,
-  .game-row .date { display: none; }
+  .game-row .date {
+    grid-area: extra;
+    display: block;
+  }
   .game-logo { width: 30px; height: 30px; }
 }
