@@ -148,6 +148,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
   border: 0;
   border-left: 1px solid rgba(255, 255, 255, .1);
   background: transparent;
@@ -188,6 +189,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
   border: 0;
   border-right: 1px solid rgba(255, 255, 255, .1);
   background: transparent;
@@ -550,7 +552,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
     top: 4px;
     width: 22px;
     height: 22px;
-    padding-right: 0;
   }
   .search-glyph {
     font-size: 15px;
@@ -560,7 +561,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
     top: 4px;
     width: 22px;
     height: 22px;
-    padding-left: 0;
   }
   .filter-icon {
     width: 12px;
