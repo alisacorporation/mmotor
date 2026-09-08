@@ -99,13 +99,15 @@ function gameIcon(game: Game) {
         <span class="search-icon">⌕</span>
       </label>
 
-      <button class="lang-button" type="button" aria-label="Language">
-        <span class="flag">🇺🇸</span>
-      </button>
+      <div class="account-actions">
+        <button class="lang-button" type="button" aria-label="Language">
+          <span class="flag">🇺🇸</span>
+        </button>
 
-      <button class="login-button" type="button">
-        <span>LOGIN</span>
-      </button>
+        <button class="login-button" type="button">
+          <span>LOGIN</span>
+        </button>
+      </div>
     </header>
 
     <nav class="category-bar" aria-label="Game categories">

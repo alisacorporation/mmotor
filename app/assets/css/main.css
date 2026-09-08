@@ -59,7 +59,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 .topbar {
   height: 54px;
   display: grid;
-  grid-template-columns: auto 42px minmax(280px, 438px) 42px auto;
+  grid-template-columns: auto 42px minmax(280px, 438px) auto;
   align-items: center;
   gap: 22px;
   max-width: 1480px;
@@ -149,7 +149,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 }
 
 .login-button {
-  justify-self: end;
   height: 42px;
   padding: 0 17px;
   display: flex;
@@ -163,8 +162,14 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   cursor: pointer;
 }
 
+.account-actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .lang-button {
-  justify-self: center;
   width: 40px;
   height: 40px;
   display: grid;
@@ -491,6 +496,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
     top: 4px;
     font-size: 15px;
   }
+  .account-actions { display: contents; }
   .lang-button {
     flex: 0 0 auto;
     width: 30px;
