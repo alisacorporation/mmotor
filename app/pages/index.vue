@@ -54,6 +54,7 @@ const activeCategory = ref('All')
 const query = ref('')
 const dark = ref(true)
 const showMore = ref(false)
+const searchInput = ref<HTMLInputElement | null>(null)
 
 const filteredGames = computed(() => {
   const q = query.value.trim().toLowerCase()
@@ -79,6 +80,10 @@ function toggleTheme() {
   dark.value = !dark.value
 }
 
+function submitSearch() {
+  searchInput.value?.focus()
+}
+
 function gameIcon(game: Game) {
   return game.version === 'High-Five' ? 'HF' : 'II'
 }
@@ -95,7 +100,12 @@ function gameIcon(game: Game) {
 
       <label class="search-box">
         <span class="sr-only">Search games</span>
-        <input v-model="query" placeholder="Search games..." />
+        <input
+          ref="searchInput"
+          v-model="query"
+          placeholder="Search games..."
+          @keydown.enter="submitSearch"
+        />
         <button class="filter-button" type="button" aria-label="Filter">
           <svg class="filter-icon" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
             <line x1="3" y1="5" x2="17" y2="5" />
@@ -106,7 +116,7 @@ function gameIcon(game: Game) {
             <circle cx="9" cy="15" r="1.6" fill="currentColor" stroke="none" />
           </svg>
         </button>
-        <span class="search-icon">⌕</span>
+        <button class="search-icon" type="button" aria-label="Search" @click="submitSearch">⌕</button>
       </label>
 
       <div class="account-actions">
