@@ -148,7 +148,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 2px;
   border: 0;
   border-left: 1px solid rgba(255, 255, 255, .1);
   background: transparent;
@@ -161,7 +160,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 .search-glyph {
   display: block;
   font-size: 22px;
+  line-height: 1;
   transform: rotate(-20deg);
+  transform-origin: center;
 }
 
 .search-icon:hover,
@@ -187,7 +188,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 2px;
   border: 0;
   border-right: 1px solid rgba(255, 255, 255, .1);
   background: transparent;
