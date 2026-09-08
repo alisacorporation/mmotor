@@ -59,7 +59,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 .topbar {
   height: 54px;
   display: grid;
-  grid-template-columns: auto 42px minmax(280px, 438px) auto;
+  grid-template-columns: max-content 42px minmax(280px, 438px) auto;
   align-items: center;
   gap: 22px;
   max-width: 1480px;
