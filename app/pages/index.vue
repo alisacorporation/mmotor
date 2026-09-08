@@ -116,7 +116,9 @@ function gameIcon(game: Game) {
             <circle cx="9" cy="15" r="1.6" fill="currentColor" stroke="none" />
           </svg>
         </button>
-        <button class="search-icon" type="button" aria-label="Search" @click="submitSearch">⌕</button>
+        <button class="search-icon" type="button" aria-label="Search" @click="submitSearch">
+          <span class="search-glyph">⌕</span>
+        </button>
       </label>
 
       <div class="account-actions">
