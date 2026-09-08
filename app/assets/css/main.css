@@ -443,14 +443,45 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 @media (max-width: 700px) {
   .site-shell { padding: 12px; }
   .topbar {
-    grid-template-columns: auto 38px 1fr;
-    gap: 9px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     height: auto;
     margin-bottom: 10px;
   }
-  .brand { font-size: 21px; }
-  .login-button { display: none; }
-  .search-box { grid-column: 1 / -1; grid-row: 2; }
+  .brand {
+    flex: 0 0 auto;
+    font-size: 15px;
+    letter-spacing: -.5px;
+    white-space: nowrap;
+  }
+  .theme-button {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    font-size: 18px;
+  }
+  .search-box { flex: 1 1 auto; min-width: 0; }
+  .search-box input {
+    height: 32px;
+    padding: 0 26px 0 10px;
+    font-size: 11px;
+    border-radius: 9px;
+  }
+  .search-icon {
+    right: 8px;
+    top: 4px;
+    font-size: 15px;
+  }
+  .login-button {
+    flex: 0 0 auto;
+    height: 32px;
+    padding: 0 9px;
+    gap: 4px;
+    font-size: 10px;
+    border-radius: 9px;
+  }
+  .flag { font-size: 14px; }
   .category-bar { margin-bottom: 12px; }
   .category { padding-inline: 15px; }
   .game-row,
