@@ -447,7 +447,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   .category { padding-inline: 15px; }
   .game-row,
   .game-row.compact {
-    grid-template-columns: 22px 32px minmax(100px, 1fr) 59px;
+    grid-template-columns: 22px 32px minmax(100px, 160px) 59px;
     grid-template-areas:
       "rank logo name  stats"
       "rank logo extra extra";
@@ -459,7 +459,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   }
   .game-row.no-rank,
   .game-row.compact.no-rank {
-    grid-template-columns: 32px minmax(100px, 1fr) 59px;
+    grid-template-columns: 32px minmax(100px, 160px) 59px;
     grid-template-areas:
       "logo name  stats"
       "logo extra extra";
