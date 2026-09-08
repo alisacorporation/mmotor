@@ -275,7 +275,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 .game-row {
   min-height: 54px;
   display: grid;
-  grid-template-columns: 26px 37px minmax(120px, 1fr) 72px 47px;
+  grid-template-columns: 26px 37px minmax(120px, 190px) 72px 47px;
   align-items: center;
   gap: 8px;
   padding: 0 17px;
@@ -283,15 +283,15 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 }
 
 .game-row.compact {
-  grid-template-columns: 26px 37px minmax(120px, 1fr) 72px 84px;
+  grid-template-columns: 26px 37px minmax(120px, 190px) 72px 84px;
 }
 
 .game-row.no-rank {
-  grid-template-columns: 37px minmax(120px, 1fr) 72px 47px;
+  grid-template-columns: 37px minmax(120px, 190px) 72px 47px;
 }
 
 .game-row.compact.no-rank {
-  grid-template-columns: 37px minmax(120px, 1fr) 72px 84px;
+  grid-template-columns: 37px minmax(120px, 190px) 72px 84px;
 }
 
 .is-light .game-row { border-bottom-color: rgba(103, 104, 173, .1); }
