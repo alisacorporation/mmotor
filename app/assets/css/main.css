@@ -447,44 +447,31 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   .category { padding-inline: 15px; }
   .game-row,
   .game-row.compact {
-    grid-template-columns: 16px 26px minmax(60px, 1fr) 56px 46px;
-    gap: 6px;
-    padding-block: 7px;
+    grid-template-columns: 22px 32px minmax(100px, 160px) 59px;
+    grid-template-areas:
+      "rank logo name  stats"
+      "rank logo extra extra";
+    row-gap: 3px;
+    gap: 5px;
+    padding-block: 8px;
     padding-inline: 10px;
     align-items: center;
   }
   .game-row.no-rank,
   .game-row.compact.no-rank {
-    grid-template-columns: 26px minmax(60px, 1fr) 56px 46px;
+    grid-template-columns: 32px minmax(100px, 160px) 59px;
+    grid-template-areas:
+      "logo name  stats"
+      "logo extra extra";
   }
-  .game-row .rank { font-size: 10px; }
-  .game-logo { width: 26px; height: 26px; font-size: 9px; }
-  .game-row .game-name {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 4px;
-    overflow: hidden;
-  }
-  .game-row .game-name strong {
-    flex: 0 0 auto;
-    font-size: 11px;
-  }
-  .game-row .game-name small {
-    flex: 1 1 auto;
-    min-width: 0;
-    font-size: 9px;
-  }
-  .game-row .rating {
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: flex-end;
-    gap: 3px;
-    font-size: 10px;
-  }
-  .game-row .rating small { padding-left: 0; font-size: 9px; }
+  .game-row .rank { grid-area: rank; }
+  .game-row .game-logo { grid-area: logo; align-self: center; }
+  .game-row .game-name { grid-area: name; }
+  .game-row .rating { grid-area: stats; }
   .game-row .change,
   .game-row .date {
+    grid-area: extra;
     display: block;
-    font-size: 9px;
   }
+  .game-logo { width: 30px; height: 30px; }
 }
