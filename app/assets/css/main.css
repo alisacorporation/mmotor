@@ -21,7 +21,6 @@ button { color: inherit; }
 button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-offset: 2px; }
 
 .site-shell {
-  position: relative;
   min-height: 100vh;
   color: #edf0ff;
   padding: 15px 62px 42px;
@@ -60,12 +59,11 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 .topbar {
   height: 54px;
   display: grid;
-  grid-template-columns: auto 42px minmax(280px, 438px);
+  grid-template-columns: auto 42px minmax(280px, 438px) auto;
   align-items: center;
   gap: 22px;
   max-width: 1480px;
   margin: 0 auto 6px;
-  padding-right: 155px;
 }
 
 .brand {
@@ -165,9 +163,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 }
 
 .account-actions {
-  position: absolute;
-  top: 15px;
-  right: 62px;
+  justify-self: end;
   display: flex;
   align-items: center;
   gap: 10px;
