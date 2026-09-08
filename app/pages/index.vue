@@ -99,8 +99,11 @@ function gameIcon(game: Game) {
         <span class="search-icon">⌕</span>
       </label>
 
-      <button class="login-button" type="button">
+      <button class="lang-button" type="button" aria-label="Language">
         <span class="flag">🇺🇸</span>
+      </button>
+
+      <button class="login-button" type="button">
         <span>LOGIN</span>
       </button>
     </header>
