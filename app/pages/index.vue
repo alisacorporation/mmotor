@@ -21,16 +21,16 @@ const categories = [
 ]
 
 const games: Game[] = [
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'Interlude', stars: 500, players: 'x200', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'Interlude', stars: 500, players: 'x250', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'High-Five', stars: 500, players: 'x50', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'Interlude', stars: 500, players: 'x50', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'Interlude', stars: 500, players: 'x100', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '+63%' }
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x200', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x250', change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x50', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x50', change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x100', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '+63%' }
 ]
 
 const soon = Array.from({ length: 10 }, (_, i) => ({
