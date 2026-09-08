@@ -96,6 +96,16 @@ function gameIcon(game: Game) {
       <label class="search-box">
         <span class="sr-only">Search games</span>
         <input v-model="query" placeholder="Search games..." />
+        <button class="filter-button" type="button" aria-label="Filter">
+          <svg class="filter-icon" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <line x1="3" y1="5" x2="17" y2="5" />
+            <circle cx="7" cy="5" r="1.6" fill="currentColor" stroke="none" />
+            <line x1="3" y1="10" x2="17" y2="10" />
+            <circle cx="13" cy="10" r="1.6" fill="currentColor" stroke="none" />
+            <line x1="3" y1="15" x2="17" y2="15" />
+            <circle cx="9" cy="15" r="1.6" fill="currentColor" stroke="none" />
+          </svg>
+        </button>
         <span class="search-icon">⌕</span>
       </label>
 
