@@ -342,7 +342,11 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   text-align: center;
 }
 
-.trophy-icon {
+.trophy-icon,
+.clock-icon,
+.bolt-icon,
+.sparkle-icon,
+.grid-icon {
   display: block;
 }
 
