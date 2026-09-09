@@ -182,7 +182,28 @@ function gameIcon(game: Game) {
 
     <main class="dashboard">
       <section class="top-grid">
-        <GamePanel title="TOP GAME" icon="🏆">
+        <GamePanel title="TOP GAME">
+          <template #icon>
+            <svg class="trophy-icon" viewBox="0 0 24 24" width="19" height="19">
+              <path d="M7 3h10v5a5 5 0 0 1-10 0V3z" fill="#FBBF24" />
+              <path
+                d="M7 4C3.8 4 2 5.8 2 7.5S3.8 10.6 7 10.6"
+                fill="none"
+                stroke="#FBBF24"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+              <path
+                d="M17 4C20.2 4 22 5.8 22 7.5S20.2 10.6 17 10.6"
+                fill="none"
+                stroke="#FBBF24"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+              <rect x="11" y="11" width="2" height="4" fill="#B45309" />
+              <path d="M9.5 15 L14.5 15 L16 17.5 L8 17.5 Z" fill="#92400E" />
+            </svg>
+          </template>
           <div v-for="(game, index) in filteredGames.slice(0, 10)" :key="`top-${index}`" class="game-row">
             <span class="rank">{{ index + 1 }}</span>
             <span class="game-logo">{{ gameIcon(game) }}</span>

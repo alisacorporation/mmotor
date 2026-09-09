@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <section class="panel">
     <div class="panel-head">
-      <span class="panel-icon">{{ icon }}</span>
+      <span class="panel-icon"><slot name="icon">{{ icon }}</slot></span>
       <h2>{{ title }}</h2>
       <span class="panel-arrow">›</span>
     </div>
