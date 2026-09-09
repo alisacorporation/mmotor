@@ -121,14 +121,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   color: #f4f3ff;
 }
 
-.moon {
-  display: inline-block;
-}
-
-.moon-crescent {
-  transform: translateX(4px);
-}
-
 .search-box {
   position: relative;
   width: 100%;
