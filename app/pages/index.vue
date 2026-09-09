@@ -17,8 +17,16 @@ const categories = [
   'Counter-Strike',
   'AION',
   'Perfect World',
-  'RF Online'
+  'RF Online',
+  'Silkroad Online',
+  'Metin2',
+  'Rappelz',
+  'Tibia'
 ]
+
+const VISIBLE_CATEGORIES = 6
+const visibleCategories = computed(() => categories.slice(0, VISIBLE_CATEGORIES))
+const hiddenCategories = computed(() => categories.slice(VISIBLE_CATEGORIES))
 
 const games: Game[] = [
   { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
@@ -55,6 +63,8 @@ const query = ref('')
 const dark = ref(true)
 const showMore = ref(false)
 const searchInput = ref<HTMLInputElement | null>(null)
+const moreWrap = ref<HTMLElement | null>(null)
+const dropdownPos = ref({ top: 0, right: 0 })
 
 const filteredGames = computed(() => {
   const q = query.value.trim().toLowerCase()
@@ -74,7 +84,46 @@ useSeoMeta({
 
 function selectCategory(category: string) {
   activeCategory.value = category
+  showMore.value = false
 }
+
+function onDocumentClick(event: MouseEvent) {
+  if (!showMore.value) return
+  if (moreWrap.value && !moreWrap.value.contains(event.target as Node)) {
+    showMore.value = false
+  }
+}
+
+function onDocumentKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') showMore.value = false
+}
+
+function positionDropdown() {
+  const rect = moreWrap.value?.getBoundingClientRect()
+  if (!rect) return
+  dropdownPos.value = {
+    top: rect.bottom + 8,
+    right: window.innerWidth - rect.right
+  }
+}
+
+watch(showMore, async (open) => {
+  if (!open) return
+  await nextTick()
+  positionDropdown()
+})
+
+onMounted(() => {
+  document.addEventListener('click', onDocumentClick)
+  document.addEventListener('keydown', onDocumentKeydown)
+  window.addEventListener('resize', positionDropdown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', onDocumentClick)
+  document.removeEventListener('keydown', onDocumentKeydown)
+  window.removeEventListener('resize', positionDropdown)
+})
 
 function toggleTheme() {
   dark.value = !dark.value
@@ -178,7 +227,7 @@ function gameIcon(game: Game) {
 
     <nav class="category-bar" aria-label="Game categories">
       <button
-        v-for="category in categories.slice(0, showMore ? categories.length : 8)"
+        v-for="category in visibleCategories"
         :key="category"
         class="category"
         :class="{ active: activeCategory === category }"
@@ -188,9 +237,42 @@ function gameIcon(game: Game) {
         {{ category }}
       </button>
 
-      <button class="category more" type="button" @click="showMore = !showMore">
-        More <span>{{ showMore ? '⌃' : '⌄' }}</span>
-      </button>
+      <div class="category-more-wrap" ref="moreWrap">
+        <button
+          class="category more"
+          :class="{ active: showMore }"
+          type="button"
+          aria-haspopup="true"
+          :aria-expanded="showMore"
+          @click="showMore = !showMore"
+        >
+          More
+          <span class="more-chevron" :class="{ open: showMore }">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </span>
+        </button>
+
+        <div
+          v-if="showMore"
+          class="more-dropdown"
+          role="menu"
+          :style="{ top: dropdownPos.top + 'px', right: dropdownPos.right + 'px' }"
+        >
+          <button
+            v-for="category in hiddenCategories"
+            :key="category"
+            class="more-dropdown-item"
+            :class="{ active: activeCategory === category }"
+            type="button"
+            role="menuitem"
+            @click="selectCategory(category)"
+          >
+            {{ category }}
+          </button>
+        </div>
+      </div>
     </nav>
 
     <main class="dashboard">
