@@ -79,7 +79,7 @@ const ratingThresholds = [
 ]
 
 const filters = reactive({
-  versions: [] as string[],
+  version: '',
   minRating: 0,
   title: ''
 })
@@ -90,24 +90,18 @@ const filterPopupEl = ref<HTMLElement | null>(null)
 const filterPos = ref({ top: 0, left: 0 })
 
 const activeFilterCount = computed(
-  () => (filters.versions.length ? 1 : 0) + (filters.minRating ? 1 : 0) + (filters.title ? 1 : 0)
+  () => (filters.version ? 1 : 0) + (filters.minRating ? 1 : 0) + (filters.title ? 1 : 0)
 )
 
 function matchesFilters(game: Game) {
-  if (filters.versions.length && !filters.versions.includes(game.version)) return false
+  if (filters.version && game.version !== filters.version) return false
   if (filters.minRating && game.stars < filters.minRating) return false
   if (filters.title && game.title !== filters.title) return false
   return true
 }
 
-function toggleVersionFilter(version: string) {
-  const idx = filters.versions.indexOf(version)
-  if (idx === -1) filters.versions.push(version)
-  else filters.versions.splice(idx, 1)
-}
-
 function resetFilters() {
-  filters.versions = []
+  filters.version = ''
   filters.minRating = 0
   filters.title = ''
 }
@@ -316,34 +310,19 @@ function gameIcon(game: Game) {
       >
         <div class="filter-popup-section">
           <span class="filter-popup-label">Version</span>
-          <div class="filter-chip-row">
-            <button
-              v-for="version in allVersions"
-              :key="version"
-              type="button"
-              class="filter-chip"
-              :class="{ active: filters.versions.includes(version) }"
-              @click="toggleVersionFilter(version)"
-            >
-              {{ version }}
-            </button>
-          </div>
+          <select class="filter-select" v-model="filters.version">
+            <option value="">All versions</option>
+            <option v-for="version in allVersions" :key="version" :value="version">{{ version }}</option>
+          </select>
         </div>
 
         <div class="filter-popup-section">
           <span class="filter-popup-label">Min rating</span>
-          <div class="filter-chip-row">
-            <button
-              v-for="threshold in ratingThresholds"
-              :key="threshold.value"
-              type="button"
-              class="filter-chip"
-              :class="{ active: filters.minRating === threshold.value }"
-              @click="filters.minRating = threshold.value"
-            >
+          <select class="filter-select" v-model.number="filters.minRating">
+            <option v-for="threshold in ratingThresholds" :key="threshold.value" :value="threshold.value">
               {{ threshold.label }}
-            </button>
-          </div>
+            </option>
+          </select>
         </div>
 
         <div class="filter-popup-section">
