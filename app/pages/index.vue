@@ -66,13 +66,64 @@ const searchInput = ref<HTMLInputElement | null>(null)
 const moreWrap = ref<HTMLElement | null>(null)
 const dropdownPos = ref({ top: 0, right: 0 })
 
+const allGameEntries = [...games, ...soon, ...started, ...newGames, ...allGames]
+const allVersions = Array.from(new Set(allGameEntries.map((game) => game.version)))
+const allTitles = Array.from(new Set(allGameEntries.map((game) => game.title)))
+
+const ratingThresholds = [
+  { label: 'Any', value: 0 },
+  { label: '500+', value: 500 },
+  { label: '1000+', value: 1000 },
+  { label: '1500+', value: 1500 },
+  { label: '2000+', value: 2000 }
+]
+
+const filters = reactive({
+  versions: [] as string[],
+  minRating: 0,
+  title: ''
+})
+
+const filterOpen = ref(false)
+const filterButtonEl = ref<HTMLElement | null>(null)
+const filterPopupEl = ref<HTMLElement | null>(null)
+const filterPos = ref({ top: 0, left: 0 })
+
+const activeFilterCount = computed(
+  () => (filters.versions.length ? 1 : 0) + (filters.minRating ? 1 : 0) + (filters.title ? 1 : 0)
+)
+
+function matchesFilters(game: Game) {
+  if (filters.versions.length && !filters.versions.includes(game.version)) return false
+  if (filters.minRating && game.stars < filters.minRating) return false
+  if (filters.title && game.title !== filters.title) return false
+  return true
+}
+
+function toggleVersionFilter(version: string) {
+  const idx = filters.versions.indexOf(version)
+  if (idx === -1) filters.versions.push(version)
+  else filters.versions.splice(idx, 1)
+}
+
+function resetFilters() {
+  filters.versions = []
+  filters.minRating = 0
+  filters.title = ''
+}
+
 const filteredGames = computed(() => {
   const q = query.value.trim().toLowerCase()
-  if (!q) return games
-  return games.filter((game) =>
-    `${game.title} ${game.genre} ${game.version}`.toLowerCase().includes(q)
-  )
+  return games.filter((game) => {
+    if (q && !`${game.title} ${game.genre} ${game.version}`.toLowerCase().includes(q)) return false
+    return matchesFilters(game)
+  })
 })
+
+const filteredSoon = computed(() => soon.filter(matchesFilters))
+const filteredStarted = computed(() => started.filter(matchesFilters))
+const filteredNewGames = computed(() => newGames.filter(matchesFilters))
+const filteredAllGames = computed(() => allGames.filter(matchesFilters))
 
 useSeoMeta({
   title: 'MMOTOP — Game Server Rankings',
@@ -88,14 +139,24 @@ function selectCategory(category: string) {
 }
 
 function onDocumentClick(event: MouseEvent) {
-  if (!showMore.value) return
-  if (moreWrap.value && !moreWrap.value.contains(event.target as Node)) {
+  const target = event.target as Node
+
+  if (showMore.value && moreWrap.value && !moreWrap.value.contains(target)) {
     showMore.value = false
+  }
+
+  if (filterOpen.value) {
+    const inButton = filterButtonEl.value?.contains(target)
+    const inPopup = filterPopupEl.value?.contains(target)
+    if (!inButton && !inPopup) filterOpen.value = false
   }
 }
 
 function onDocumentKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') showMore.value = false
+  if (event.key === 'Escape') {
+    showMore.value = false
+    filterOpen.value = false
+  }
 }
 
 function positionDropdown() {
@@ -107,22 +168,45 @@ function positionDropdown() {
   }
 }
 
+const FILTER_POPUP_WIDTH = 270
+
+function positionFilterPopup() {
+  const rect = filterButtonEl.value?.getBoundingClientRect()
+  if (!rect) return
+  const left = Math.min(rect.left, window.innerWidth - FILTER_POPUP_WIDTH - 10)
+  filterPos.value = {
+    top: rect.bottom + 10,
+    left: Math.max(10, left)
+  }
+}
+
+function repositionOpenPanels() {
+  if (showMore.value) positionDropdown()
+  if (filterOpen.value) positionFilterPopup()
+}
+
 watch(showMore, async (open) => {
   if (!open) return
   await nextTick()
   positionDropdown()
 })
 
+watch(filterOpen, async (open) => {
+  if (!open) return
+  await nextTick()
+  positionFilterPopup()
+})
+
 onMounted(() => {
   document.addEventListener('click', onDocumentClick)
   document.addEventListener('keydown', onDocumentKeydown)
-  window.addEventListener('resize', positionDropdown)
+  window.addEventListener('resize', repositionOpenPanels)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', onDocumentClick)
   document.removeEventListener('keydown', onDocumentKeydown)
-  window.removeEventListener('resize', positionDropdown)
+  window.removeEventListener('resize', repositionOpenPanels)
 })
 
 function toggleTheme() {
@@ -196,7 +280,16 @@ function gameIcon(game: Game) {
           placeholder="Search games..."
           @keydown.enter="submitSearch"
         />
-        <button class="filter-button" type="button" aria-label="Filter">
+        <button
+          class="filter-button"
+          type="button"
+          aria-label="Filter"
+          aria-haspopup="true"
+          :aria-expanded="filterOpen"
+          ref="filterButtonEl"
+          :class="{ active: filterOpen || activeFilterCount > 0 }"
+          @click="filterOpen = !filterOpen"
+        >
           <svg class="filter-icon" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
             <line x1="3" y1="5" x2="17" y2="5" />
             <circle cx="7" cy="5" r="1.6" fill="currentColor" stroke="none" />
@@ -205,6 +298,7 @@ function gameIcon(game: Game) {
             <line x1="3" y1="15" x2="17" y2="15" />
             <circle cx="9" cy="15" r="1.6" fill="currentColor" stroke="none" />
           </svg>
+          <span v-if="activeFilterCount > 0" class="filter-badge">{{ activeFilterCount }}</span>
         </button>
         <button class="search-icon" type="button" aria-label="Search" @click="submitSearch">
           <svg class="search-svg" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
@@ -213,6 +307,58 @@ function gameIcon(game: Game) {
           </svg>
         </button>
       </label>
+
+      <div
+        v-if="filterOpen"
+        class="filter-popup"
+        ref="filterPopupEl"
+        :style="{ top: filterPos.top + 'px', left: filterPos.left + 'px' }"
+      >
+        <div class="filter-popup-section">
+          <span class="filter-popup-label">Version</span>
+          <div class="filter-chip-row">
+            <button
+              v-for="version in allVersions"
+              :key="version"
+              type="button"
+              class="filter-chip"
+              :class="{ active: filters.versions.includes(version) }"
+              @click="toggleVersionFilter(version)"
+            >
+              {{ version }}
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-popup-section">
+          <span class="filter-popup-label">Min rating</span>
+          <div class="filter-chip-row">
+            <button
+              v-for="threshold in ratingThresholds"
+              :key="threshold.value"
+              type="button"
+              class="filter-chip"
+              :class="{ active: filters.minRating === threshold.value }"
+              @click="filters.minRating = threshold.value"
+            >
+              {{ threshold.label }}
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-popup-section">
+          <span class="filter-popup-label">Game</span>
+          <select class="filter-select" v-model="filters.title">
+            <option value="">All games</option>
+            <option v-for="title in allTitles" :key="title" :value="title">{{ title }}</option>
+          </select>
+        </div>
+
+        <div class="filter-popup-actions">
+          <button type="button" class="filter-reset" @click="resetFilters">Reset</button>
+          <button type="button" class="filter-apply" @click="filterOpen = false">Apply</button>
+        </div>
+      </div>
 
       <div class="account-actions">
         <button class="lang-button" type="button" aria-label="Language">
@@ -341,6 +487,7 @@ function gameIcon(game: Game) {
             </span>
             <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
+          <div v-if="filteredGames.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
         </GamePanel>
 
@@ -373,7 +520,7 @@ function gameIcon(game: Game) {
               />
             </svg>
           </template>
-          <div v-for="(game, index) in soon" :key="`soon-${index}`" class="game-row compact no-rank">
+          <div v-for="(game, index) in filteredSoon" :key="`soon-${index}`" class="game-row compact no-rank">
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
@@ -394,6 +541,7 @@ function gameIcon(game: Game) {
             </span>
             <span class="date">{{ game.date }}</span>
           </div>
+          <div v-if="filteredSoon.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
         </GamePanel>
 
@@ -410,7 +558,7 @@ function gameIcon(game: Game) {
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="url(#boltGrad)" />
             </svg>
           </template>
-          <div v-for="(game, index) in started" :key="`started-${index}`" class="game-row compact no-rank">
+          <div v-for="(game, index) in filteredStarted" :key="`started-${index}`" class="game-row compact no-rank">
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
@@ -431,6 +579,7 @@ function gameIcon(game: Game) {
             </span>
             <span class="date">{{ game.date }}</span>
           </div>
+          <div v-if="filteredStarted.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
         </GamePanel>
       </section>
@@ -452,7 +601,7 @@ function gameIcon(game: Game) {
               />
             </svg>
           </template>
-          <div v-for="(game, index) in newGames" :key="`new-${index}`" class="game-row no-rank">
+          <div v-for="(game, index) in filteredNewGames" :key="`new-${index}`" class="game-row no-rank">
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
@@ -473,6 +622,7 @@ function gameIcon(game: Game) {
             </span>
             <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
+          <div v-if="filteredNewGames.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
         </GamePanel>
 
@@ -492,7 +642,7 @@ function gameIcon(game: Game) {
               <rect x="13" y="13" width="7" height="7" rx="1.8" fill="url(#gridGrad)" />
             </svg>
           </template>
-          <div v-for="(game, index) in allGames" :key="`all-${index}`" class="game-row no-rank">
+          <div v-for="(game, index) in filteredAllGames" :key="`all-${index}`" class="game-row no-rank">
             <span class="game-logo">{{ gameIcon(game) }}</span>
             <span class="game-name">
               <strong>{{ game.title }}</strong>
@@ -513,6 +663,7 @@ function gameIcon(game: Game) {
             </span>
             <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
+          <div v-if="filteredAllGames.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
         </GamePanel>
       </section>
