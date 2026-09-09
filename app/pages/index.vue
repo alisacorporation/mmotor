@@ -184,24 +184,44 @@ function gameIcon(game: Game) {
       <section class="top-grid">
         <GamePanel title="TOP GAME">
           <template #icon>
-            <svg class="trophy-icon" viewBox="0 0 24 24" width="19" height="19">
-              <path d="M7 3h10v5a5 5 0 0 1-10 0V3z" fill="#FBBF24" />
+            <svg class="trophy-icon" viewBox="0 0 24 24" width="24" height="24">
+              <defs>
+                <linearGradient id="trophyGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFF1C2" />
+                  <stop offset="35%" stop-color="#FFCB4D" />
+                  <stop offset="75%" stop-color="#F5A623" />
+                  <stop offset="100%" stop-color="#D6820A" />
+                </linearGradient>
+                <linearGradient id="trophyBase" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#C97A3D" />
+                  <stop offset="100%" stop-color="#7A431E" />
+                </linearGradient>
+              </defs>
+              <path d="M5 2h14v6a7 7 0 0 1-14 0V2z" fill="url(#trophyGold)" />
               <path
-                d="M7 4C3.8 4 2 5.8 2 7.5S3.8 10.6 7 10.6"
+                d="M5 3C2 3 1 5 1 7.5S2 12 5 11.6"
                 fill="none"
-                stroke="#FBBF24"
-                stroke-width="1.6"
+                stroke="url(#trophyGold)"
+                stroke-width="2"
                 stroke-linecap="round"
               />
               <path
-                d="M17 4C20.2 4 22 5.8 22 7.5S20.2 10.6 17 10.6"
+                d="M19 3C22 3 23 5 23 7.5S22 12 19 11.6"
                 fill="none"
-                stroke="#FBBF24"
-                stroke-width="1.6"
+                stroke="url(#trophyGold)"
+                stroke-width="2"
                 stroke-linecap="round"
               />
-              <rect x="11" y="11" width="2" height="4" fill="#B45309" />
-              <path d="M9.5 15 L14.5 15 L16 17.5 L8 17.5 Z" fill="#92400E" />
+              <rect x="10.5" y="13" width="3" height="4" fill="url(#trophyBase)" />
+              <path d="M8 17 L16 17 L18.5 20 L5.5 20 Z" fill="url(#trophyBase)" />
+              <path
+                d="M7.5 3.2C6.6 5 6.8 7 8 8.3"
+                stroke="#FFFDF3"
+                stroke-width="1.1"
+                stroke-linecap="round"
+                fill="none"
+                opacity="0.55"
+              />
             </svg>
           </template>
           <div v-for="(game, index) in filteredGames.slice(0, 10)" :key="`top-${index}`" class="game-row">
