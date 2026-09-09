@@ -95,7 +95,7 @@ function gameIcon(game: Game) {
       <NuxtLink to="/" class="brand" aria-label="MMOTOP home">MMOTOP</NuxtLink>
 
       <button class="theme-button" type="button" aria-label="Toggle theme" @click="toggleTheme">
-        <span class="moon">{{ dark ? '☾' : '☀' }}</span>
+        <span class="moon" :class="{ 'moon-crescent': dark }">{{ dark ? '☾' : '☀' }}</span>
       </button>
 
       <label class="search-box">
