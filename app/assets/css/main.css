@@ -572,6 +572,13 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 .panel.accent-violet { --panel-accent: linear-gradient(90deg, #D06BFF, #7C3AED); --panel-glow: #D06BFF; }
 .panel.accent-teal { --panel-accent: linear-gradient(90deg, #10B981, #0891B2); --panel-glow: #10B981; }
 
+.is-light .panel::before { opacity: 1; height: 3px; }
+.is-light .panel.accent-gold { --panel-accent: linear-gradient(90deg, #E8A317, #B45F04); }
+.is-light .panel.accent-blue { --panel-accent: linear-gradient(90deg, #2F8FE0, #1B4F91); }
+.is-light .panel.accent-amber { --panel-accent: linear-gradient(90deg, #F5A623, #C2410C); }
+.is-light .panel.accent-violet { --panel-accent: linear-gradient(90deg, #A855F7, #6D28D9); }
+.is-light .panel.accent-teal { --panel-accent: linear-gradient(90deg, #059669, #0E7490); }
+
 .panel-head {
   height: 50px;
   display: flex;
