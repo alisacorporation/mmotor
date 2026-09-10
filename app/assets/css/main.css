@@ -559,8 +559,11 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 2px;
   background: var(--panel-accent, linear-gradient(90deg, #9c5cff, #7c3aed));
+  opacity: .75;
+  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
 }
 
 .panel.accent-gold { --panel-accent: linear-gradient(90deg, #FFCB4D, #D6820A); --panel-glow: #F5A623; }
