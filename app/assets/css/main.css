@@ -641,10 +641,17 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   gap: 8px;
   padding: 0 17px;
   border-bottom: 1px solid rgba(89, 94, 143, .13);
+  border-left: 2px solid color-mix(in srgb, var(--panel-glow, #9c5cff) 40%, transparent);
   background: rgba(255, 255, 255, .025);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: background .18s ease;
+}
+
+.game-row:nth-child(even) {
+  background:
+    linear-gradient(color-mix(in srgb, var(--panel-glow, #9c5cff) 5%, transparent), color-mix(in srgb, var(--panel-glow, #9c5cff) 5%, transparent)),
+    rgba(255, 255, 255, .025);
 }
 
 .game-row:hover {
@@ -670,6 +677,12 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   background: rgba(255, 255, 255, .35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+.is-light .game-row:nth-child(even) {
+  background:
+    linear-gradient(color-mix(in srgb, var(--panel-glow, #9c5cff) 7%, transparent), color-mix(in srgb, var(--panel-glow, #9c5cff) 7%, transparent)),
+    rgba(255, 255, 255, .35);
 }
 
 .is-light .game-row:hover {
