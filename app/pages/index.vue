@@ -79,10 +79,10 @@ const ratingThresholds = [
 ]
 
 const rateTiers = [
-  { label: 'x1–x10', min: 1, max: 10 },
-  { label: 'x50–x100', min: 50, max: 100 },
-  { label: 'x500–x1000', min: 500, max: 1000 },
-  { label: 'x1000+', min: 1001, max: Infinity }
+  { label: 'x1–x49', min: 1, max: 49 },
+  { label: 'x50–x499', min: 50, max: 499 },
+  { label: 'x500–x999', min: 500, max: 999 },
+  { label: 'x1000+', min: 1000, max: Infinity }
 ]
 
 // The rate is the "x"-prefixed number already shown under the star rating (game.players),
