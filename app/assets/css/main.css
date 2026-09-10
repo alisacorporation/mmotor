@@ -644,6 +644,13 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   background: rgba(255, 255, 255, .025);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  transition: background .18s ease;
+}
+
+.game-row:hover {
+  background:
+    linear-gradient(color-mix(in srgb, var(--panel-glow, #9c5cff) 12%, transparent), color-mix(in srgb, var(--panel-glow, #9c5cff) 12%, transparent)),
+    rgba(255, 255, 255, .025);
 }
 
 .game-row.compact {
@@ -663,6 +670,12 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   background: rgba(255, 255, 255, .35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+.is-light .game-row:hover {
+  background:
+    linear-gradient(color-mix(in srgb, var(--panel-glow, #9c5cff) 16%, transparent), color-mix(in srgb, var(--panel-glow, #9c5cff) 16%, transparent)),
+    rgba(255, 255, 255, .35);
 }
 
 .rank {
