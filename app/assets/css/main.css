@@ -12,8 +12,11 @@ html, body, #__nuxt { min-height: 100%; margin: 0; }
 body {
   min-width: 320px;
   background:
+    radial-gradient(circle at 12% 15%, rgba(245, 166, 35, .10), transparent 32rem),
+    radial-gradient(circle at 88% 10%, rgba(94, 194, 255, .09), transparent 32rem),
     radial-gradient(circle at 50% 25%, rgba(91, 52, 176, .14), transparent 34rem),
-    radial-gradient(circle at 100% 100%, rgba(74, 38, 153, .12), transparent 34rem),
+    radial-gradient(circle at 85% 90%, rgba(16, 185, 129, .08), transparent 32rem),
+    radial-gradient(circle at 10% 90%, rgba(74, 38, 153, .12), transparent 34rem),
     #070a1b;
 }
 button, input { font: inherit; }
@@ -46,14 +49,16 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 
 .site-shell.is-light {
   color: #16182b;
-  background:
-    radial-gradient(circle at 12% 0%, rgba(142, 76, 255, .08), transparent 30rem),
-    radial-gradient(circle at 100% 15%, rgba(94, 47, 180, .06), transparent 32rem),
-    #f6f7fc;
+  background-color: #f6f7fc;
   background-image:
+    radial-gradient(circle at 12% 15%, rgba(245, 166, 35, .05), transparent 30rem),
+    radial-gradient(circle at 88% 10%, rgba(94, 194, 255, .05), transparent 30rem),
+    radial-gradient(circle at 12% 0%, rgba(142, 76, 255, .08), transparent 30rem),
+    radial-gradient(circle at 85% 90%, rgba(16, 185, 129, .045), transparent 28rem),
+    radial-gradient(circle at 100% 15%, rgba(94, 47, 180, .06), transparent 32rem),
     linear-gradient(rgba(31, 41, 102, .035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(31, 41, 102, .035) 1px, transparent 1px);
-  background-size: 44px 44px;
+  background-size: auto, auto, auto, auto, auto, 44px 44px, 44px 44px;
 }
 
 .topbar {
