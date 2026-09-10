@@ -21,7 +21,37 @@ body {
 }
 button, input { font: inherit; }
 button { color: inherit; }
-button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-offset: 2px; }
+button:focus-visible, input:focus-visible {
+  outline: 2px solid #9c5cff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgba(156, 92, 255, .18);
+  border-radius: 4px;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 92, 255, .4) transparent;
+}
+html::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track { background: transparent; }
+html::-webkit-scrollbar-thumb {
+  background: rgba(156, 92, 255, .35);
+  border-radius: 10px;
+  border: 2px solid #070a1b;
+  background-clip: padding-box;
+}
+html::-webkit-scrollbar-thumb:hover { background: rgba(156, 92, 255, .55); }
+
+html:has(.site-shell.is-light) {
+  scrollbar-color: rgba(124, 58, 237, .3) transparent;
+}
+html:has(.site-shell.is-light)::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, .28);
+  border-color: #f6f7fc;
+}
+html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, .45);
+}
 
 .site-shell {
   min-height: 100vh;
@@ -487,7 +517,16 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   border-radius: 11px;
   background: linear-gradient(180deg, rgba(22, 25, 52, .98), rgba(15, 19, 42, .97));
   box-shadow: 0 14px 45px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 92, 255, .45) transparent;
 }
+.more-dropdown::-webkit-scrollbar { width: 8px; }
+.more-dropdown::-webkit-scrollbar-track { background: transparent; }
+.more-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(156, 92, 255, .4);
+  border-radius: 8px;
+}
+.more-dropdown::-webkit-scrollbar-thumb:hover { background: rgba(156, 92, 255, .6); }
 
 .more-dropdown-item {
   flex: 0 0 auto;
@@ -513,7 +552,10 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   background: #ffffff;
   border-color: rgba(103, 104, 173, .14);
   box-shadow: 0 14px 38px rgba(31, 41, 102, .12), inset 0 1px 0 #fff;
+  scrollbar-color: rgba(124, 58, 237, .35) transparent;
 }
+.is-light .more-dropdown::-webkit-scrollbar-thumb { background: rgba(124, 58, 237, .3); }
+.is-light .more-dropdown::-webkit-scrollbar-thumb:hover { background: rgba(124, 58, 237, .5); }
 
 .is-light .more-dropdown-item { color: #62667c; }
 .is-light .more-dropdown-item:hover { background: rgba(124, 58, 237, .08); color: #16182b; }
