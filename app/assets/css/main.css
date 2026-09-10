@@ -613,7 +613,7 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 1px;
   background: var(--panel-accent, linear-gradient(90deg, #9c5cff, #7c3aed));
   opacity: .75;
   mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
