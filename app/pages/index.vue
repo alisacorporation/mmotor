@@ -5,6 +5,7 @@ type Game = {
   version: string
   stars: number
   players: string
+  rate: number
   change?: string
   date?: string
 }
@@ -29,16 +30,16 @@ const visibleCategories = computed(() => categories.slice(0, VISIBLE_CATEGORIES)
 const hiddenCategories = computed(() => categories.slice(VISIBLE_CATEGORIES))
 
 const games: Game[] = [
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x200', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x250', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x50', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x50', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x100', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '+63%' }
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', rate: 5, change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', rate: 100, change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x200', rate: 750, change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x250', rate: 5000, change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x50', rate: 10, change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x50', rate: 50, change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x100', rate: 1000, change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', rate: 3000, change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', rate: 1, change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', rate: 75, change: '+63%' }
 ]
 
 const soon = Array.from({ length: 10 }, (_, i) => ({
@@ -78,10 +79,18 @@ const ratingThresholds = [
   { label: '2000+', value: 2000 }
 ]
 
+const rateTiers = [
+  { label: 'x1–x10', min: 1, max: 10 },
+  { label: 'x50–x100', min: 50, max: 100 },
+  { label: 'x500–x1000', min: 500, max: 1000 },
+  { label: 'x1000+', min: 1001, max: Infinity }
+]
+
 const filters = reactive({
   version: '',
   minRating: 0,
-  title: ''
+  title: '',
+  rates: [] as string[]
 })
 
 const filterOpen = ref(false)
@@ -90,20 +99,38 @@ const filterPopupEl = ref<HTMLElement | null>(null)
 const filterPos = ref({ top: 0, left: 0 })
 
 const activeFilterCount = computed(
-  () => (filters.version ? 1 : 0) + (filters.minRating ? 1 : 0) + (filters.title ? 1 : 0)
+  () =>
+    (filters.version ? 1 : 0) +
+    (filters.minRating ? 1 : 0) +
+    (filters.title ? 1 : 0) +
+    (filters.rates.length ? 1 : 0)
 )
 
 function matchesFilters(game: Game) {
   if (filters.version && game.version !== filters.version) return false
   if (filters.minRating && game.stars < filters.minRating) return false
   if (filters.title && game.title !== filters.title) return false
+  if (filters.rates.length) {
+    const inSelectedTier = filters.rates.some((label) => {
+      const tier = rateTiers.find((t) => t.label === label)
+      return tier && game.rate >= tier.min && game.rate <= tier.max
+    })
+    if (!inSelectedTier) return false
+  }
   return true
+}
+
+function toggleRateFilter(label: string) {
+  const idx = filters.rates.indexOf(label)
+  if (idx === -1) filters.rates.push(label)
+  else filters.rates.splice(idx, 1)
 }
 
 function resetFilters() {
   filters.version = ''
   filters.minRating = 0
   filters.title = ''
+  filters.rates = []
 }
 
 const filteredGames = computed(() => {
@@ -333,6 +360,22 @@ function gameIcon(game: Game) {
           </select>
         </div>
 
+        <div class="filter-popup-section">
+          <span class="filter-popup-label">Rate</span>
+          <div class="filter-chip-row">
+            <button
+              v-for="tier in rateTiers"
+              :key="tier.label"
+              type="button"
+              class="filter-chip"
+              :class="{ active: filters.rates.includes(tier.label) }"
+              @click="toggleRateFilter(tier.label)"
+            >
+              {{ tier.label }}
+            </button>
+          </div>
+        </div>
+
         <div class="filter-popup-actions">
           <button type="button" class="filter-reset" @click="resetFilters">Reset</button>
           <button type="button" class="filter-apply" @click="filterOpen = false">Apply</button>
@@ -451,7 +494,7 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">{{ game.version }} · x{{ game.rate }}</span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -505,7 +548,7 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">{{ game.version }} · x{{ game.rate }}</span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -543,7 +586,7 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">{{ game.version }} · x{{ game.rate }}</span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -586,7 +629,7 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">{{ game.version }} · x{{ game.rate }}</span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -627,7 +670,7 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">{{ game.version }} · x{{ game.rate }}</span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
