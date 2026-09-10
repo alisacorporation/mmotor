@@ -543,13 +543,17 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   border: 1px solid rgba(103, 104, 173, .25);
   border-radius: 11px;
   background:
-    linear-gradient(180deg, rgba(17, 22, 48, .92), rgba(13, 18, 41, .91));
+    linear-gradient(180deg, rgba(17, 22, 48, .62), rgba(13, 18, 41, .58));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 14px 45px rgba(0,0,0,.13), inset 0 1px 0 rgba(255,255,255,.02);
 }
 
 .is-light .panel {
   border-color: rgba(103, 104, 173, .14);
-  background: #ffffff;
+  background: rgba(255, 255, 255, .6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 14px 38px rgba(31, 41, 102, .07), inset 0 1px 0 #fff;
 }
 
@@ -629,6 +633,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   gap: 8px;
   padding: 0 17px;
   border-bottom: 1px solid rgba(89, 94, 143, .13);
+  background: rgba(255, 255, 255, .025);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .game-row.compact {
@@ -643,7 +650,12 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   grid-template-columns: 37px minmax(120px, 1fr) 82px 72px 84px;
 }
 
-.is-light .game-row { border-bottom-color: rgba(103, 104, 173, .1); }
+.is-light .game-row {
+  border-bottom-color: rgba(103, 104, 173, .1);
+  background: rgba(255, 255, 255, .35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
 
 .rank {
   color: #eef0f9;
