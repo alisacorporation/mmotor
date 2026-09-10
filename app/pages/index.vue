@@ -79,9 +79,10 @@ const ratingThresholds = [
 ]
 
 const rateTiers = [
-  { label: 'x1–x49', min: 1, max: 49 },
-  { label: 'x50–x499', min: 50, max: 499 },
-  { label: 'x500–x999', min: 500, max: 999 },
+  { label: 'x1–x5', min: 1, max: 5 },
+  { label: 'x6–x10', min: 6, max: 10 },
+  { label: 'x11–x100', min: 11, max: 100 },
+  { label: 'x101–x999', min: 101, max: 999 },
   { label: 'x1000+', min: 1000, max: Infinity }
 ]
 
@@ -98,6 +99,21 @@ const filters = reactive({
   rates: [] as string[]
 })
 
+const customRateActive = ref(false)
+const customRateMin = ref('')
+const customRateMax = ref('')
+
+const customMin = computed(() => {
+  const n = parseInt(customRateMin.value, 10)
+  return Number.isFinite(n) ? n : null
+})
+const customMax = computed(() => {
+  const n = parseInt(customRateMax.value, 10)
+  return Number.isFinite(n) ? n : null
+})
+const customRateSet = computed(() => customMin.value != null || customMax.value != null)
+const rateFilterActive = computed(() => filters.rates.length > 0 || (customRateActive.value && customRateSet.value))
+
 const filterOpen = ref(false)
 const filterButtonEl = ref<HTMLElement | null>(null)
 const filterPopupEl = ref<HTMLElement | null>(null)
@@ -108,20 +124,25 @@ const activeFilterCount = computed(
     (filters.version ? 1 : 0) +
     (filters.minRating ? 1 : 0) +
     (filters.title ? 1 : 0) +
-    (filters.rates.length ? 1 : 0)
+    (rateFilterActive.value ? 1 : 0)
 )
 
 function matchesFilters(game: Game) {
   if (filters.version && game.version !== filters.version) return false
   if (filters.minRating && game.stars < filters.minRating) return false
   if (filters.title && game.title !== filters.title) return false
-  if (filters.rates.length) {
+  if (rateFilterActive.value) {
     const rate = getRate(game)
-    const inSelectedTier = filters.rates.some((label) => {
+    const inPreset = filters.rates.some((label) => {
       const tier = rateTiers.find((t) => t.label === label)
       return tier && rate >= tier.min && rate <= tier.max
     })
-    if (!inSelectedTier) return false
+    const inCustom =
+      customRateActive.value &&
+      customRateSet.value &&
+      (customMin.value == null || rate >= customMin.value) &&
+      (customMax.value == null || rate <= customMax.value)
+    if (!inPreset && !inCustom) return false
   }
   return true
 }
@@ -132,11 +153,18 @@ function toggleRateFilter(label: string) {
   else filters.rates.splice(idx, 1)
 }
 
+function toggleCustomRate() {
+  customRateActive.value = !customRateActive.value
+}
+
 function resetFilters() {
   filters.version = ''
   filters.minRating = 0
   filters.title = ''
   filters.rates = []
+  customRateActive.value = false
+  customRateMin.value = ''
+  customRateMax.value = ''
 }
 
 const filteredGames = computed(() => {
@@ -379,6 +407,31 @@ function gameIcon(game: Game) {
             >
               {{ tier.label }}
             </button>
+            <button
+              type="button"
+              class="filter-chip"
+              :class="{ active: customRateActive }"
+              @click="toggleCustomRate"
+            >
+              Custom
+            </button>
+          </div>
+          <div v-if="customRateActive" class="filter-custom-rate">
+            <input
+              v-model="customRateMin"
+              type="number"
+              min="0"
+              placeholder="From"
+              class="filter-custom-input"
+            />
+            <span class="filter-custom-sep">–</span>
+            <input
+              v-model="customRateMax"
+              type="number"
+              min="0"
+              placeholder="To"
+              class="filter-custom-input"
+            />
           </div>
         </div>
 
