@@ -5,7 +5,6 @@ type Game = {
   version: string
   stars: number
   players: string
-  rate: number
   change?: string
   date?: string
 }
@@ -30,16 +29,16 @@ const visibleCategories = computed(() => categories.slice(0, VISIBLE_CATEGORIES)
 const hiddenCategories = computed(() => categories.slice(VISIBLE_CATEGORIES))
 
 const games: Game[] = [
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', rate: 5, change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', rate: 100, change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x200', rate: 750, change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x250', rate: 5000, change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x50', rate: 10, change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x50', rate: 50, change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x100', rate: 1000, change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', rate: 3000, change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', rate: 1, change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', rate: 75, change: '+63%' }
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x200', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x250', change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x50', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x50', change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x100', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '+63%' }
 ]
 
 const soon = Array.from({ length: 10 }, (_, i) => ({
@@ -86,6 +85,12 @@ const rateTiers = [
   { label: 'x1000+', min: 1001, max: Infinity }
 ]
 
+// The rate is the "x"-prefixed number already shown under the star rating (game.players),
+// e.g. "x500" -> 500. There's no separate rate field — this parses the existing one.
+function getRate(game: Game) {
+  return parseInt(game.players.replace(/[^0-9]/g, ''), 10) || 0
+}
+
 const filters = reactive({
   version: '',
   minRating: 0,
@@ -111,9 +116,10 @@ function matchesFilters(game: Game) {
   if (filters.minRating && game.stars < filters.minRating) return false
   if (filters.title && game.title !== filters.title) return false
   if (filters.rates.length) {
+    const rate = getRate(game)
     const inSelectedTier = filters.rates.some((label) => {
       const tier = rateTiers.find((t) => t.label === label)
-      return tier && game.rate >= tier.min && game.rate <= tier.max
+      return tier && rate >= tier.min && rate <= tier.max
     })
     if (!inSelectedTier) return false
   }
