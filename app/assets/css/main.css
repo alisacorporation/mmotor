@@ -797,6 +797,9 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
 
 .is-light .version { color: #3c3f55; }
 
+/* The rate under the chronicle is a mobile-only stack; desktop keeps its own rate column. */
+.version-rate { display: none; }
+
 .rating {
   display: flex;
   flex-direction: column;
@@ -956,18 +959,39 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
   .category { padding-inline: 15px; }
   .more-dropdown { min-width: 170px; }
   .filter-popup { width: calc(100vw - 20px); max-width: 270px; }
+  /* No rating column on mobile: rank/logo/name/chronicle, then the trailing column. */
   .game-row,
   .game-row.compact {
-    grid-template-columns: 22px 32px minmax(100px, 1fr) 58px 59px;
+    grid-template-columns: 22px 32px minmax(100px, 1fr) 58px;
     gap: 5px;
     padding-inline: 10px;
   }
   .game-row.no-rank,
   .game-row.compact.no-rank {
-    grid-template-columns: 32px minmax(100px, 1fr) 58px 59px;
+    grid-template-columns: 32px minmax(100px, 1fr) 58px 60px;
   }
-  .game-row .change,
-  .game-row .date { display: none; }
+  .game-row .rating { display: none; }
+  /* TOP GAME (the only panel with ranks) keeps no trailing column. */
+  .game-row:not(.no-rank) .change,
+  .game-row:not(.no-rank) .date { display: none; }
   .game-logo { width: 30px; height: 30px; }
-  .version { overflow: hidden; text-overflow: ellipsis; }
+  .version {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    line-height: 1.2;
+    overflow: hidden;
+  }
+  .version-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .version-rate {
+    display: block;
+    color: #8b90a7;
+    font-size: 10px;
+  }
+  .is-light .version-rate { color: #898da2; }
 }

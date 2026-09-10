@@ -553,7 +553,10 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">
+              <span class="version-name">{{ game.version }}</span>
+              <small class="version-rate">{{ game.players }}</small>
+            </span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -607,7 +610,10 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">
+              <span class="version-name">{{ game.version }}</span>
+              <small class="version-rate">{{ game.players }}</small>
+            </span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -645,7 +651,10 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">
+              <span class="version-name">{{ game.version }}</span>
+              <small class="version-rate">{{ game.players }}</small>
+            </span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -688,7 +697,10 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">
+              <span class="version-name">{{ game.version }}</span>
+              <small class="version-rate">{{ game.players }}</small>
+            </span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -729,7 +741,10 @@ function gameIcon(game: Game) {
               <strong>{{ game.title }}</strong>
               <small>{{ game.genre }}</small>
             </span>
-            <span class="version">{{ game.version }}</span>
+            <span class="version">
+              <span class="version-name">{{ game.version }}</span>
+              <small class="version-rate">{{ game.players }}</small>
+            </span>
             <span class="rating">
               <span class="rating-value">
                 <svg class="star-icon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
