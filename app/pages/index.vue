@@ -504,7 +504,7 @@ function gameIcon(game: Game) {
 
     <main class="dashboard">
       <section class="top-grid">
-        <GamePanel title="TOP GAME">
+        <GamePanel title="TOP GAME" class="accent-gold">
           <template #icon>
             <svg class="trophy-icon" viewBox="0 0 24 24" width="24" height="24">
               <defs>
@@ -572,7 +572,7 @@ function gameIcon(game: Game) {
           <PanelFooter />
         </GamePanel>
 
-        <GamePanel title="COMING SOON">
+        <GamePanel title="COMING SOON" class="accent-blue">
           <template #icon>
             <svg class="clock-icon" viewBox="0 0 24 24" width="24" height="24">
               <defs>
@@ -626,7 +626,7 @@ function gameIcon(game: Game) {
           <PanelFooter />
         </GamePanel>
 
-        <GamePanel title="ALREADY STARTED">
+        <GamePanel title="ALREADY STARTED" class="accent-amber">
           <template #icon>
             <svg class="bolt-icon" viewBox="0 0 24 24" width="24" height="24">
               <defs>
@@ -666,7 +666,7 @@ function gameIcon(game: Game) {
       </section>
 
       <section class="bottom-grid">
-        <GamePanel title="NEW GAMES" :rows="3">
+        <GamePanel title="NEW GAMES" :rows="3" class="accent-violet">
           <template #icon>
             <svg class="sparkle-icon" viewBox="0 0 24 24" width="24" height="24">
               <defs>
@@ -707,7 +707,7 @@ function gameIcon(game: Game) {
           <PanelFooter />
         </GamePanel>
 
-        <GamePanel title="ALL GAMES" :rows="3">
+        <GamePanel title="ALL GAMES" :rows="3" class="accent-teal">
           <template #icon>
             <svg class="grid-icon" viewBox="0 0 24 24" width="24" height="24">
               <defs>

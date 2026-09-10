@@ -538,6 +538,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 }
 
 .panel {
+  position: relative;
   overflow: hidden;
   border: 1px solid rgba(103, 104, 173, .25);
   border-radius: 11px;
@@ -551,6 +552,22 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
   background: #ffffff;
   box-shadow: 0 14px 38px rgba(31, 41, 102, .07), inset 0 1px 0 #fff;
 }
+
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--panel-accent, linear-gradient(90deg, #9c5cff, #7c3aed));
+}
+
+.panel.accent-gold { --panel-accent: linear-gradient(90deg, #FFCB4D, #D6820A); --panel-glow: #F5A623; }
+.panel.accent-blue { --panel-accent: linear-gradient(90deg, #5EC2FF, #2F7FE0); --panel-glow: #5EC2FF; }
+.panel.accent-amber { --panel-accent: linear-gradient(90deg, #FFD23F, #F5850B); --panel-glow: #FFD23F; }
+.panel.accent-violet { --panel-accent: linear-gradient(90deg, #D06BFF, #7C3AED); --panel-glow: #D06BFF; }
+.panel.accent-teal { --panel-accent: linear-gradient(90deg, #10B981, #0891B2); --panel-glow: #10B981; }
 
 .panel-head {
   height: 50px;
@@ -577,6 +594,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #9c5cff; outline-
 .sparkle-icon,
 .grid-icon {
   display: block;
+  filter: drop-shadow(0 0 7px var(--panel-glow, transparent));
 }
 
 .is-light .panel-head { border-bottom-color: rgba(103, 104, 173, .12); }
