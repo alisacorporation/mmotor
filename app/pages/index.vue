@@ -6,6 +6,7 @@ type Game = {
   stars: number
   players: string
   change?: string
+  /** Start date in ISO form, "YYYY-MM-DD". Formatted for display by formatDate(). */
   date?: string
 }
 
@@ -43,12 +44,12 @@ const games: Game[] = [
 
 const soon = Array.from({ length: 10 }, (_, i) => ({
   ...games[i % games.length],
-  date: '12.23.2024'
+  date: '2024-12-23'
 }))
 
 const started = Array.from({ length: 10 }, (_, i) => ({
   ...games[(i + 1) % games.length],
-  date: '12.23.2024'
+  date: '2024-12-23'
 }))
 
 const newGames = games.slice(0, 3)
@@ -90,6 +91,21 @@ const rateTiers = [
 // e.g. "x500" -> 500. There's no separate rate field — this parses the existing one.
 function getRate(game: Game) {
   return parseInt(game.players.replace(/[^0-9]/g, ''), 10) || 0
+}
+
+// Dates are stored as ISO ("2024-12-23") and only formatted for display, so the
+// stored value stays unambiguous and a future language switch only changes MONTHS.
+// Rendering the month as a word avoids the 05.06 trap, where a numeric date reads
+// as two different days depending on the reader's convention.
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+// Parsed by hand rather than through Date: `new Date('2024-12-23')` is UTC midnight,
+// so getDate() would report the 22nd for anyone west of Greenwich.
+function formatDate(iso?: string) {
+  if (!iso) return ''
+  const [year, month, day] = iso.split('-').map(Number)
+  if (!year || !month || !day || month < 1 || month > 12) return iso
+  return `${day} ${MONTHS[month - 1]} ${year}`
 }
 
 const filters = reactive({
@@ -626,7 +642,7 @@ function gameIcon(game: Game) {
               </span>
               <small>{{ game.players }}</small>
             </span>
-            <span class="date">{{ game.date }}</span>
+            <span class="date">{{ formatDate(game.date) }}</span>
           </div>
           <div v-if="filteredSoon.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
@@ -667,7 +683,7 @@ function gameIcon(game: Game) {
               </span>
               <small>{{ game.players }}</small>
             </span>
-            <span class="date">{{ game.date }}</span>
+            <span class="date">{{ formatDate(game.date) }}</span>
           </div>
           <div v-if="filteredStarted.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
