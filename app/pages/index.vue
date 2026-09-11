@@ -101,11 +101,23 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 // Parsed by hand rather than through Date: `new Date('2024-12-23')` is UTC midnight,
 // so getDate() would report the 22nd for anyone west of Greenwich.
-function formatDate(iso?: string) {
-  if (!iso) return ''
+function parseISODate(iso?: string) {
+  if (!iso) return null
   const [year, month, day] = iso.split('-').map(Number)
-  if (!year || !month || !day || month < 1 || month > 12) return iso
-  return `${day} ${MONTHS[month - 1]} ${year}`
+  if (!year || !month || !day || month < 1 || month > 12) return null
+  return { year, month, day }
+}
+
+// Split across two lines in the card, so the column stays narrow: day and month
+// carry the meaning, the year sits under them as the quieter half.
+function formatDayMonth(iso?: string) {
+  const parsed = parseISODate(iso)
+  return parsed ? `${parsed.day} ${MONTHS[parsed.month - 1]}` : iso ?? ''
+}
+
+function formatYear(iso?: string) {
+  const parsed = parseISODate(iso)
+  return parsed ? String(parsed.year) : ''
 }
 
 const filters = reactive({
@@ -642,7 +654,10 @@ function gameIcon(game: Game) {
               </span>
               <small>{{ game.players }}</small>
             </span>
-            <span class="date">{{ formatDate(game.date) }}</span>
+            <span class="date">
+              <span class="date-day">{{ formatDayMonth(game.date) }}</span>
+              <small class="date-year">{{ formatYear(game.date) }}</small>
+            </span>
           </div>
           <div v-if="filteredSoon.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
@@ -683,7 +698,10 @@ function gameIcon(game: Game) {
               </span>
               <small>{{ game.players }}</small>
             </span>
-            <span class="date">{{ formatDate(game.date) }}</span>
+            <span class="date">
+              <span class="date-day">{{ formatDayMonth(game.date) }}</span>
+              <small class="date-year">{{ formatYear(game.date) }}</small>
+            </span>
           </div>
           <div v-if="filteredStarted.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
