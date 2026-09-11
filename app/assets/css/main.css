@@ -1008,9 +1008,4 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
     grid-template-columns: 32px minmax(100px, 1fr) 58px 60px;
   }
   .game-row.compact .date { display: block; }
-  /* No spare width to collect on mobile, so the chronicle stays left-aligned. */
-  .game-row.compact .version {
-    align-items: flex-start;
-    text-align: left;
-  }
 }
