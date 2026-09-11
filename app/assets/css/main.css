@@ -701,17 +701,44 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
     rgba(255, 255, 255, .025);
 }
 
-.game-row.compact {
-  grid-template-columns: 26px 37px minmax(120px, 1fr) 82px 72px 84px;
-}
-
 .game-row.no-rank {
   grid-template-columns: 37px minmax(120px, 1fr) 82px 72px 47px;
 }
 
-.game-row.compact.no-rank {
-  grid-template-columns: 37px minmax(120px, 1fr) 82px 72px 84px;
+/* COMING SOON and ALREADY STARTED (the two .compact panels) carry no rating
+   column: the rate sits under the chronicle and the date takes its place.
+   Applies at every width; the mobile block only resizes the columns. */
+.game-row.compact {
+  grid-template-columns: 26px 37px minmax(120px, 1fr) 82px 84px;
 }
+
+.game-row.compact.no-rank {
+  grid-template-columns: 37px minmax(120px, 1fr) 82px 84px;
+}
+
+.game-row.compact .rating { display: none; }
+
+.game-row.compact .version {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  line-height: 1.2;
+}
+
+.game-row.compact .version-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.game-row.compact .version-rate {
+  display: block;
+  color: #8b90a7;
+  font-size: 10px;
+}
+
+.is-light .game-row.compact .version-rate { color: #898da2; }
 
 .is-light .game-row {
   border-bottom-color: rgba(103, 104, 173, .1);
@@ -973,30 +1000,10 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
   .game-logo { width: 30px; height: 30px; }
   .version { overflow: hidden; text-overflow: ellipsis; }
 
-  /* COMING SOON and ALREADY STARTED only (the two .compact panels): drop the
-     rating column, stack the rate under the chronicle, and use the freed
-     column for the start date. Every other panel keeps the layout above. */
+  /* The two .compact panels keep their rate-under-chronicle layout from the
+     base rules; here they just get mobile column widths and their date back. */
   .game-row.compact.no-rank {
     grid-template-columns: 32px minmax(100px, 1fr) 58px 60px;
   }
-  .game-row.compact .rating { display: none; }
   .game-row.compact .date { display: block; }
-  .game-row.compact .version {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1px;
-    line-height: 1.2;
-  }
-  .game-row.compact .version-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .game-row.compact .version-rate {
-    display: block;
-    color: #8b90a7;
-    font-size: 10px;
-  }
-  .is-light .game-row.compact .version-rate { color: #898da2; }
 }
