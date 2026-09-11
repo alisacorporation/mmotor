@@ -713,7 +713,7 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
 }
 
 .game-row.compact.no-rank {
-  grid-template-columns: 37px minmax(120px, 1fr) 82px 84px;
+  grid-template-columns: 37px minmax(120px, max-content) 1fr 84px;
 }
 
 .game-row.compact .rating { display: none; }
@@ -722,6 +722,8 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
   gap: 1px;
   line-height: 1.2;
 }
@@ -1006,4 +1008,9 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
     grid-template-columns: 32px minmax(100px, 1fr) 58px 60px;
   }
   .game-row.compact .date { display: block; }
+  /* No spare width to collect on mobile, so the chronicle stays left-aligned. */
+  .game-row.compact .version {
+    align-items: flex-start;
+    text-align: left;
+  }
 }
