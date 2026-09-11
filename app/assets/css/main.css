@@ -959,39 +959,44 @@ html:has(.site-shell.is-light)::-webkit-scrollbar-thumb:hover {
   .category { padding-inline: 15px; }
   .more-dropdown { min-width: 170px; }
   .filter-popup { width: calc(100vw - 20px); max-width: 270px; }
-  /* No rating column on mobile: rank/logo/name/chronicle, then the trailing column. */
   .game-row,
   .game-row.compact {
-    grid-template-columns: 22px 32px minmax(100px, 1fr) 58px;
+    grid-template-columns: 22px 32px minmax(100px, 1fr) 58px 59px;
     gap: 5px;
     padding-inline: 10px;
   }
-  .game-row.no-rank,
+  .game-row.no-rank {
+    grid-template-columns: 32px minmax(100px, 1fr) 58px 59px;
+  }
+  .game-row .change,
+  .game-row .date { display: none; }
+  .game-logo { width: 30px; height: 30px; }
+  .version { overflow: hidden; text-overflow: ellipsis; }
+
+  /* COMING SOON and ALREADY STARTED only (the two .compact panels): drop the
+     rating column, stack the rate under the chronicle, and use the freed
+     column for the start date. Every other panel keeps the layout above. */
   .game-row.compact.no-rank {
     grid-template-columns: 32px minmax(100px, 1fr) 58px 60px;
   }
-  .game-row .rating { display: none; }
-  /* TOP GAME (the only panel with ranks) keeps no trailing column. */
-  .game-row:not(.no-rank) .change,
-  .game-row:not(.no-rank) .date { display: none; }
-  .game-logo { width: 30px; height: 30px; }
-  .version {
+  .game-row.compact .rating { display: none; }
+  .game-row.compact .date { display: block; }
+  .game-row.compact .version {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1px;
     line-height: 1.2;
-    overflow: hidden;
   }
-  .version-name {
+  .game-row.compact .version-name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .version-rate {
+  .game-row.compact .version-rate {
     display: block;
     color: #8b90a7;
     font-size: 10px;
   }
-  .is-light .version-rate { color: #898da2; }
+  .is-light .game-row.compact .version-rate { color: #898da2; }
 }
