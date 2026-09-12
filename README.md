@@ -1,4 +1,4 @@
-# MMOTOR Nuxt dashboard
+# MMOTOP Nuxt dashboard
 
 Recreation of the supplied MMOTOR gaming-directory UI using Nuxt 4 and Vue 3.
 
