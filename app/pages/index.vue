@@ -15,7 +15,6 @@ const categories = [
   'World of Warcraft',
   'Lineage II',
   'MuOnline',
-  'Counter-Strike',
   'AION',
   'Perfect World',
   'RF Online',
