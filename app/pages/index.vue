@@ -5,7 +5,6 @@ type Game = {
   version: string
   stars: number
   players: string
-  change?: string
   /** Start date in ISO form, "YYYY-MM-DD". Formatted for display by formatDate(). */
   date?: string
 }
@@ -29,16 +28,16 @@ const visibleCategories = computed(() => categories.slice(0, VISIBLE_CATEGORIES)
 const hiddenCategories = computed(() => categories.slice(VISIBLE_CATEGORIES))
 
 const games: Game[] = [
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x200', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x250', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x50', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x50', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x100', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500', change: '+63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '-63%' },
-  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500', change: '+63%' }
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x200' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x250' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x50' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x50' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x100' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'High-Five', stars: 500, players: 'x500' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500' },
+  { title: 'LA2DREAM', genre: 'MMORPG / Lineage II', version: 'Interlude', stars: 500, players: 'x500' }
 ]
 
 const soon = Array.from({ length: 10 }, (_, i) => ({
@@ -53,9 +52,9 @@ const started = Array.from({ length: 10 }, (_, i) => ({
 
 const newGames = games.slice(0, 3)
 const allGames = [
-  { ...games[1], stars: 1923, players: 'x50', change: '-13%' },
+  { ...games[1], stars: 1923, players: 'x50' },
   { ...games[0] },
-  { ...games[1], stars: 1923, players: 'x50', change: '-13%' }
+  { ...games[1], stars: 1923, players: 'x50' }
 ]
 
 const activeCategory = ref('All')
@@ -596,7 +595,6 @@ function gameIcon(game: Game) {
               </span>
               <small>{{ game.players }}</small>
             </span>
-            <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
           <div v-if="filteredGames.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
@@ -746,7 +744,6 @@ function gameIcon(game: Game) {
               </span>
               <small>{{ game.players }}</small>
             </span>
-            <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
           <div v-if="filteredNewGames.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
@@ -790,7 +787,6 @@ function gameIcon(game: Game) {
               </span>
               <small>{{ game.players }}</small>
             </span>
-            <span class="change" :class="{ positive: game.change?.startsWith('+') }">{{ game.change }}</span>
           </div>
           <div v-if="filteredAllGames.length === 0" class="empty-state">No games match the selected filters.</div>
           <PanelFooter />
